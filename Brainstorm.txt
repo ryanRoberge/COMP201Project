@@ -1,0 +1,29 @@
+Group Project Brainstorming
+
+Job Delegation:
+
+Kevin Cotter - Draw the asset images for the game
+Ryan Roberge - View stuffs
+Aayush - Model / collision stuffs
+Alex Robbins - Model stuffs
+
+Objects:
+Main Car - YOU
+Boulder
+Other Cars [variants of cars]
+
+Dessert-esque Landscape Objects
+	- Cactus
+	- Tumble-weed
+	- Dead Trees
+	- Fallen over Tree
+	- Fallen over Cactus
+	- Cow Skull
+	- Wooden Barrels
+
+Features:
+Score Counter
+Phases: (Day / Night) every minute
+	- At Night (limited visibility but 2x points)
+Day Music changes
+File-IO for local high score counter; 
