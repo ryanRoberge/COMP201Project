@@ -1,4 +1,3 @@
-
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -18,11 +17,18 @@ public:
     ~View();
     // Print out the visible stuff in the grid
     void show(Model * model);
+
 private:
     SDL_Window* window;
     SDL_Surface* screen;
     bool fail;
     SDL_Surface* load(char * path);
+	
+	SDL_Surface* road;
+	SDL_Surface* car;
+	SDL_Rect source_road_1, source_road_2;
+	SDL_Rect destination_road_1, destination_road_2, destination_car;
+	
 //    SDL_Surface* text;
 //    Mix_Music * music;
 //    Mix_Chunk * food;
