@@ -41,7 +41,7 @@ void Controller::loop() {
                 case SDLK_LEFT:
                 case SDLK_RIGHT:
 					model->go(direction[e.key.keysym.sym]);
-					model->calculate();
+					//model->calculate(model);
                 break;
                 default:
                 break;

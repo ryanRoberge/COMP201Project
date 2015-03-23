@@ -6,27 +6,7 @@ using namespace std;
 
 // Constructor initializes the object
 Model::Model() {
-public:
-	int sourceRoad1_w = 1280;
-	int sourceRoad1_h = 720;
-	
-	int sourceRoad2_w = 1280;
-	int sourceRoad2_h = 720;
-	
-	int sourceRoad1_x = 0;
-	int sourceRoad1_y = 0;
-	
-	int sourceRoad2_x = 0;
-	int sourceRoad2_y = 720;
-	
-	int destinationRoad1_y = 0;
-	int destinationRoad1_x = 0;
-	
-	int destinationRoad2_y = 0;
-	int destinationRoad2_x = 0;
-	
-	int destinationCar_y = 555;
-	int destinationCar_x = 490;
+
 }
 // Destructor deletes dynamically allocated memory
 Model::~Model() {
@@ -43,15 +23,15 @@ void Model::go(Direction d)
 	return;
 }
 
-void Model::calculate()
+void Model::calculate(Model * model)
 {
 	//update bottom part of road image
-	sourceRoad1_h++;
-    destinationRoad1_y++;
+	model->sourceRoad1_h++;
+    model->destinationRoad1_y++;
 	
 	//update top part of road image
-	sourceRoad2_h++;
-    destinationRoad2_y++;
+	model->sourceRoad2_h++;
+    model->destinationRoad2_y++;
 	
 	//reset road image after every loop through
 	if (model->sourceRoad2_y == 0 || model->sourceRoad2_h == 720) {

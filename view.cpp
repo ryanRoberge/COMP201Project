@@ -129,7 +129,7 @@ void View::show(Model * model) {
 	/*SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format,
         0x00, 0x00, 0x00));*/
 	
-	update(model);
+	//update(model);
 	
 	SDL_BlitSurface( road, &source_road_1, screen, &destination_road_1 );
 	SDL_BlitSurface( road, &source_road_2, screen, &destination_road_2 );
@@ -137,22 +137,22 @@ void View::show(Model * model) {
 	
 
     //update bottom part of road image
-	/*source_road_1.h = source_road_1.h - 1;
-    destination_road_1.y = destination_road_1.y + 1;*/
+	source_road_1.h = source_road_1.h - 1;
+    destination_road_1.y = destination_road_1.y + 1;
 	
 	//update top part of road image
-    /*source_road_2.y = source_road_2.y - 1;
-    source_road_2.h = source_road_2.h + 1;*/
+    source_road_2.y = source_road_2.y - 1;
+    source_road_2.h = source_road_2.h + 1;
 	
 	//reset road image after every loop through
-	/*if (source_road_2.y == 0 || source_road_2.h == 720) {
+	if (source_road_2.y == 0 || source_road_2.h == 720) {
 		source_road_1.h = 720;
 		destination_road_1.y = 0;
 		source_road_2.y = 720;
 		source_road_2.h = 0;
-	}*/
+	}
 	
-	/*switch(model->direction)
+	switch(model->direction)
 	{
 		case LEFT: destination_car.x--;
 		break;
@@ -160,7 +160,7 @@ void View::show(Model * model) {
 		break;
 		case STAGNANT:
 		break;
-	}*/
+	}
 
 	//model->direction = STAGNANT;
 	
