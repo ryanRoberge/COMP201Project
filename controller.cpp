@@ -5,7 +5,7 @@ using namespace std;
 
 Controller::Controller() {
     model = new Model();
-    view = new View("Game", 1024, 768);
+    view = new View("An Ode to Pole Position", 1280, 720);
 }
 
 Controller::~Controller() {
@@ -40,7 +40,8 @@ void Controller::loop() {
                 case SDLK_UP:
                 case SDLK_LEFT:
                 case SDLK_RIGHT:
-//                    model->go(direction[e.key.keysym.sym]);
+					model->go(direction[e.key.keysym.sym]);
+					model->calculate();
                 break;
                 default:
                 break;

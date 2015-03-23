@@ -17,6 +17,7 @@ public:
     ~View();
     // Print out the visible stuff in the grid
     void show(Model * model);
+	void update(Model * model);
 
 private:
     SDL_Window* window;

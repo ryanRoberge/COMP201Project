@@ -1,7 +1,7 @@
 #ifndef _MODEL_H
 #define _MODEL_H
 
-enum Direction { UP, DOWN, LEFT, RIGHT };
+enum Direction { UP, DOWN, LEFT, RIGHT, STAGNANT };
 
 // The model manages the state of the game
 class Model {
@@ -13,6 +13,13 @@ public:
     // Is the game over?
     bool gameOver();
     // TODO: Put your stuff here
+	
+	Direction direction;
+	
+	void go(Direction d);
+	
+	void calculate();
+	
 };
 
 #endif

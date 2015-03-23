@@ -97,33 +97,73 @@ SDL_Surface* View::load(char * path) {
     return optimizedSurface;
 }
 
+void View::update(Model * model)
+{
+	source_road_1.w = model->sourceRoad1_w;
+	source_road_1.h = model->sourceRoad1_h;
+	
+	source_road_2.w = model->sourceRoad2_w;
+	source_road_2.h = model->sourceRoad2_h;
+	
+	source_road_1.x = model->sourceRoad1_x;
+	source_road_1.y = model->sourceRoad1_y;
+	
+	source_road_2.x = model->sourceRoad2_x;
+	source_road_2.y =model->sourceRoad2_y;
+	
+	destination_road_1.y = model->destinationRoad1_y;
+	destination_road_1.x = model->destinationRoad1_x;
+	
+	destination_road_2.y = model->destinationRoad2_y;
+	destination_road_2.x = model->destinationRoad2_x;
+	
+	destination_car.y = model->destinationCar_y;
+	destination_car.x = model->destinationCar_x;
+	
+	return;
+}
+
 void View::show(Model * model) {
 
 	//not needed i guess?
 	/*SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format,
         0x00, 0x00, 0x00));*/
-		
+	
+	update(model);
+	
 	SDL_BlitSurface( road, &source_road_1, screen, &destination_road_1 );
 	SDL_BlitSurface( road, &source_road_2, screen, &destination_road_2 );
 	SDL_BlitSurface( car, NULL, screen, &destination_car);
 	
 
     //update bottom part of road image
-	source_road_1.h = source_road_1.h - 1;
-    destination_road_1.y = destination_road_1.y + 1;
+	/*source_road_1.h = source_road_1.h - 1;
+    destination_road_1.y = destination_road_1.y + 1;*/
 	
 	//update top part of road image
-    source_road_2.y = source_road_2.y - 1;
-    source_road_2.h = source_road_2.h + 1;
+    /*source_road_2.y = source_road_2.y - 1;
+    source_road_2.h = source_road_2.h + 1;*/
 	
 	//reset road image after every loop through
-	if (source_road_2.y == 0 || source_road_2.h == 720) {
+	/*if (source_road_2.y == 0 || source_road_2.h == 720) {
 		source_road_1.h = 720;
 		destination_road_1.y = 0;
 		source_road_2.y = 720;
 		source_road_2.h = 0;
-	}
+	}*/
+	
+	/*switch(model->direction)
+	{
+		case LEFT: destination_car.x--;
+		break;
+		case RIGHT: destination_car.x++;
+		break;
+		case STAGNANT:
+		break;
+	}*/
 
+	//model->direction = STAGNANT;
+	
     // Probably call SDL_FillRect or SDL_BlitSurface a bunch here :-)
 
     SDL_UpdateWindowSurface(window);
