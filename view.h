@@ -27,6 +27,8 @@ private:
 	SDL_Surface* road;
 	//object car
 	SDL_Surface* car;
+	//obstacle 1
+	SDL_Surface* cage;
 	
 //    SDL_Surface* text;
 //    Mix_Music * music;

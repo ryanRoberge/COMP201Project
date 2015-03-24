@@ -52,6 +52,10 @@ View::View(string title, int width, int height) {
     if (car == NULL) {
         return;
     }
+	cage = load("assets/cage.png"); 
+    if (cage == NULL) {
+        return;
+    }
 }
 
 View::~View() {
@@ -88,6 +92,7 @@ void View::show(Model * model) {
 	SDL_BlitSurface( road, &(model->source_road_1), screen, &(model->destination_road_1) );
 	SDL_BlitSurface( road, &(model->source_road_2), screen, &(model->destination_road_2) );
 	SDL_BlitSurface( car, NULL, screen, &(model->destination_car) );
+	SDL_BlitSurface( cage, &(model->source_obstacle), screen, &(model->destination_obstacle) );
 	
     // Probably call SDL_FillRect or SDL_BlitSurface a bunch here :-)
 

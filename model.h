@@ -24,8 +24,8 @@ public:
 	void calculate();
 
 	//SDL location variables for images
-	SDL_Rect source_road_1, source_road_2;
-	SDL_Rect destination_road_1, destination_road_2, destination_car;
+	SDL_Rect source_road_1, source_road_2, source_obstacle;
+	SDL_Rect destination_road_1, destination_road_2, destination_car, destination_obstacle;
 	
 };
 

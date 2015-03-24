@@ -5,7 +5,6 @@ using namespace std;
 
 Controller::Controller() {
     model = new Model();
- //   view = new View("Game", 1280, 720);
     view = new View("An Ode to Pole Position", 1280, 720);
 }
 
@@ -20,7 +19,7 @@ https://wiki.libsdl.org/SDL_Event
 */
 void Controller::loop() {
     SDL_Event e;
-    unsigned int lastTime = 0, currentTime;
+    unsigned int lastTime = 0, currentTime = 0;
     std::map<SDL_Keycode, Direction> direction;
     //direction[SDLK_UP] = UP;
     //direction[SDLK_DOWN] = DOWN;
@@ -28,7 +27,8 @@ void Controller::loop() {
     direction[SDLK_RIGHT] = RIGHT;
 
     while(!model->gameOver()) {
-        currentTime = SDL_GetTicks();
+		///lastTime = currentTime;
+		///currentTime = SDL_GetTicks();
         // Do stuff here to animate as necessary
 		view->show(model);
         if (SDL_PollEvent(&e) != 0) {
@@ -55,6 +55,9 @@ void Controller::loop() {
 			model->direction = STAGNANT;
 			model->calculate();
 		}
+		///currentTime = SDL_GetTicks();
+		///SDL_Delay((25.0/3.0) - (currentTime - lastTime));
+		///lastTime = currentTime;
     }
     // TODO: show something nice?
     view->show(model);

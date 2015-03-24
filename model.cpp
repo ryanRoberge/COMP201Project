@@ -23,6 +23,13 @@ Model::Model() {
 	
 	destination_car.y = 555;
 	destination_car.x = 490;
+	
+	source_obstacle.x = 0;
+	source_obstacle.y = 101;
+	source_obstacle.w = 80;
+	source_obstacle.h = 1;
+	destination_obstacle.y = 0;
+	destination_obstacle.x = 490;
 }
 // Destructor deletes dynamically allocated memory
 Model::~Model() {
@@ -43,12 +50,12 @@ void Model::go(Direction d)
 void Model::calculate()
 {
 	//update bottom part of road image
-	source_road_1.h = source_road_1.h - 1;
-    destination_road_1.y = destination_road_1.y + 1;
+	source_road_1.h--;// = source_road_1.h - 1;
+    destination_road_1.y++;// = destination_road_1.y + 1;
 	
 	//update top part of road image
-    source_road_2.y = source_road_2.y - 1;
-    source_road_2.h = source_road_2.h + 1;
+    source_road_2.y--;// = source_road_2.y - 1;
+    source_road_2.h++;// = source_road_2.h + 1;
 	
 	//reset road image after every loop through
 	if (source_road_2.y == 0 || source_road_2.h == 720) {
@@ -61,12 +68,21 @@ void Model::calculate()
 	//updates car position
 	switch(direction)
 	{
-		case LEFT: destination_car.x = destination_car.x - 6;
+		case LEFT: destination_car.x = destination_car.x - 10;
 		break;
-		case RIGHT: destination_car.x = destination_car.x + 6;
+		case RIGHT: destination_car.x = destination_car.x + 10;
 		break;
 		case STAGNANT:
 		break;
+	}
+	
+	//update obstacle position
+	destination_obstacle.y++;
+	if (source_obstacle.y > 0) {
+		source_obstacle.y--;
+		source_obstacle.h++;
+		destination_obstacle.y--;
+
 	}
 	
 	return;
