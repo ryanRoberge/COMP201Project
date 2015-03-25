@@ -6,50 +6,83 @@ using namespace std;
 
 // Constructor initializes the object
 Model::Model() {
-
+	//initialize location variables for road and car
+	source_road_1.x = 0;
+	source_road_1.y = 0;
+	source_road_1.w = 1280;
+	source_road_1.h = 720;
+	destination_road_1.y = 0;
+	destination_road_1.x = 0;
+	
+	source_road_2.x = 0;
+	source_road_2.y = 720;
+	source_road_2.w = 1280;
+	source_road_2.h = 0;
+	destination_road_2.y = 0;
+	destination_road_2.x = 0;
+	
+	destination_car.y = 555;
+	destination_car.x = 490;
+	
+	source_obstacle.x = 0;
+	source_obstacle.y = 101;
+	source_obstacle.w = 80;
+	source_obstacle.h = 1;
+	destination_obstacle.y = 0;
+	destination_obstacle.x = 490;
 }
 // Destructor deletes dynamically allocated memory
 Model::~Model() {
+	
 }
 
 bool Model::gameOver() {
+	//collision detection
     return false;
 }
 
 void Model::go(Direction d)
 {
 	direction = d;
-	
 	return;
 }
 
-void Model::calculate(Model * model)
+void Model::calculate()
 {
 	//update bottom part of road image
-	model->sourceRoad1_h++;
-    model->destinationRoad1_y++;
+	source_road_1.h--;// = source_road_1.h - 1;
+    destination_road_1.y++;// = destination_road_1.y + 1;
 	
 	//update top part of road image
-	model->sourceRoad2_h++;
-    model->destinationRoad2_y++;
+    source_road_2.y--;// = source_road_2.y - 1;
+    source_road_2.h++;// = source_road_2.h + 1;
 	
 	//reset road image after every loop through
-	if (model->sourceRoad2_y == 0 || model->sourceRoad2_h == 720) {
-		model->sourceRoad1_h = 720;
-		model->destinationRoad1_y = 0;
-		model->sourceRoad2_y = 720;
-		model->sourceRoad2_h = 0;
+	if (source_road_2.y == 0 || source_road_2.h == 720) {
+		source_road_1.h = 720;
+		destination_road_1.y = 0;
+		source_road_2.y = 720;
+		source_road_2.h = 0;
 	}
 	
 	//updates car position
-	switch(model->direction)
+	switch(direction)
 	{
-		case LEFT: model->destinationCar_x--;
+		case LEFT: destination_car.x = destination_car.x - 10;
 		break;
-		case RIGHT: model->destinationCar_x++;
+		case RIGHT: destination_car.x = destination_car.x + 10;
 		break;
 		case STAGNANT:
 		break;
+	}
+	
+	//update obstacle position
+	destination_obstacle.y++;
+	if (source_obstacle.y > 0) {
+		source_obstacle.y--;
+		source_obstacle.h++;
+		destination_obstacle.y--;
+
 	}
 	
 	return;

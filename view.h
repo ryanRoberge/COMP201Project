@@ -17,18 +17,18 @@ public:
     ~View();
     // Print out the visible stuff in the grid
     void show(Model * model);
-	void update(Model * model);
 
 private:
     SDL_Window* window;
     SDL_Surface* screen;
     bool fail;
     SDL_Surface* load(char * path);
-	
+	//object road
 	SDL_Surface* road;
+	//object car
 	SDL_Surface* car;
-	SDL_Rect source_road_1, source_road_2;
-	SDL_Rect destination_road_1, destination_road_2, destination_car;
+	//obstacle 1
+	SDL_Surface* cage;
 	
 //    SDL_Surface* text;
 //    Mix_Music * music;
