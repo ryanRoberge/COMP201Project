@@ -1,6 +1,7 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <string>
 
 #ifndef _MODEL_H
 #define _MODEL_H
@@ -11,6 +12,15 @@ enum Direction { LEFT, RIGHT, STAGNANT };
 class Model {
 public:
 
+	int score = 0;
+	std::string message = "";
+	
+	int MULTIPLIER = 1;
+	int OFFSET = 20;
+	
+	int currentTime = 0;
+	int lastTime = 0;
+	
 	int sourceRoad1_w = 1280;
 	int sourceRoad1_h = 720;
 	
@@ -38,6 +48,8 @@ public:
     ~Model();
     // Is the game over?
     bool gameOver();
+	
+	bool collided();
 	//direction of car
 	Direction direction;
 	//update direction of car
@@ -46,7 +58,7 @@ public:
 	void calculate(Model * model);
 
 	//SDL location variables for images
-	SDL_Rect source_road_1, source_road_2, source_obstacle;
+	SDL_Rect source_road_1, source_road_2, source_obstacle, scoreCounter, scoreCounterShadow, MESSAGE, MESSAGE_SHADOW;
 	SDL_Rect destination_road_1, destination_road_2, destination_car, destination_obstacle;
 	
 };

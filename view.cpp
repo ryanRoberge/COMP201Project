@@ -1,5 +1,6 @@
 #include "view.h"
-
+#include<string>
+#include<sstream>
 using namespace std;
 
 // Initialize SDL
@@ -56,6 +57,21 @@ View::View(string title, int width, int height) {
     if (cage == NULL) {
         return;
     }
+	
+	//Initialize SDL_ttf
+    if( TTF_Init() == -1 )
+    {
+        return;    
+    }
+	//Open the font
+    //font = TTF_OpenFont( "assets/test.tff", 28 );
+	
+	//If there was an error in loading the font
+    if( font == NULL )
+    {
+        return;
+    }
+	
 }
 
 View::~View() {
@@ -83,6 +99,13 @@ SDL_Surface* View::load(char * path) {
     return optimizedSurface;
 }
 
+string View::to_string(int x)
+{
+	std::ostringstream os ;
+	os << x ;
+	return os.str() ;
+}
+
 void View::show(Model * model) {
 
 	//not needed i guess?
@@ -94,7 +117,27 @@ void View::show(Model * model) {
 	SDL_BlitSurface( car, NULL, screen, &(model->destination_car) );
 	SDL_BlitSurface( cage, &(model->source_obstacle), screen, &(model->destination_obstacle) );
 	
-    // Probably call SDL_FillRect or SDL_BlitSurface a bunch here :-)
+	textScore = "Points: " + to_string(model->score);
+	if(SDL_GetTicks() > 5000)
+		model->message = "YOU'VE SURVIVED THIS FAR, READY TO SPEED THINGS UP?";
+	if(SDL_GetTicks() > 10000)
+		model->message = "YOU'LL NEVER MAKE IT.";
+
+	scoreCounter = TTF_RenderText_Solid( font, textScore.c_str(), textColor );
+	scoreCounterShadow = TTF_RenderText_Solid( font, textScore.c_str(), shadowColor );
+	
+	SDL_BlitSurface( scoreCounterShadow, NULL, screen, &(model->scoreCounterShadow) );
+	SDL_BlitSurface( scoreCounter, NULL, screen, &(model->scoreCounter) );
+	
+	message = TTF_RenderText_Solid( font, model->message.c_str(), messageColor );
+	messageShadow = TTF_RenderText_Solid( font, model->message.c_str(), shadowColor );
+	
+	SDL_BlitSurface( messageShadow, NULL, screen, &(model->MESSAGE_SHADOW) );
+	SDL_BlitSurface( message, NULL, screen, &(model->MESSAGE) );	
+
+	// Probably call SDL_FillRect or SDL_BlitSurface a bunch here :-)
 
     SDL_UpdateWindowSurface(window);
+	
+	return;
 }
