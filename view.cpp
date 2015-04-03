@@ -120,20 +120,41 @@ void View::show(Model * model) {
 	textScore = "Points: " + to_string(model->score);
 	if(SDL_GetTicks() > 5000)
 		model->message = "YOU'VE SURVIVED THIS FAR, READY TO SPEED THINGS UP?";
-	if(SDL_GetTicks() > 10000)
-		model->message = "YOU'LL NEVER MAKE IT.";
+	if(SDL_GetTicks() > 20000)
+	{
+		if(once == false)
+		{
+			model->MESSAGE.x += 250;
+			model->MESSAGE_SHADOW.x += 250;	
+			once = true;
+		}
 
-	scoreCounter = TTF_RenderText_Solid( font, textScore.c_str(), textColor );
-	scoreCounterShadow = TTF_RenderText_Solid( font, textScore.c_str(), shadowColor );
+		model->message = "YOU'LL NEVER MAKE IT.";
+	}
+
+		scoreCounter = TTF_RenderText_Solid( font, textScore.c_str(), textColor );
+		scoreCounterShadow = TTF_RenderText_Solid( font, textScore.c_str(), shadowColor );
+		SDL_BlitSurface( scoreCounterShadow, NULL, screen, &(model->scoreCounterShadow) );
+		SDL_BlitSurface( scoreCounter, NULL, screen, &(model->scoreCounter) );
+
+	if(SDL_GetTicks() > 5000 && SDL_GetTicks() < 10000)
+	{
+		message = TTF_RenderText_Solid( font, model->message.c_str(), messageColor );
+		messageShadow = TTF_RenderText_Solid( font, model->message.c_str(), shadowColor );
 	
-	SDL_BlitSurface( scoreCounterShadow, NULL, screen, &(model->scoreCounterShadow) );
-	SDL_BlitSurface( scoreCounter, NULL, screen, &(model->scoreCounter) );
+		SDL_BlitSurface( messageShadow, NULL, screen, &(model->MESSAGE_SHADOW) );
+		SDL_BlitSurface( message, NULL, screen, &(model->MESSAGE) );	
+	}
 	
-	message = TTF_RenderText_Solid( font, model->message.c_str(), messageColor );
-	messageShadow = TTF_RenderText_Solid( font, model->message.c_str(), shadowColor );
+	if(SDL_GetTicks() > 20000 && SDL_GetTicks() < 25000)
+	{
+		message = TTF_RenderText_Solid( font, model->message.c_str(), messageColor );
+		messageShadow = TTF_RenderText_Solid( font, model->message.c_str(), shadowColor );
 	
-	SDL_BlitSurface( messageShadow, NULL, screen, &(model->MESSAGE_SHADOW) );
-	SDL_BlitSurface( message, NULL, screen, &(model->MESSAGE) );	
+		SDL_BlitSurface( messageShadow, NULL, screen, &(model->MESSAGE_SHADOW) );
+		SDL_BlitSurface( message, NULL, screen, &(model->MESSAGE) );	
+	}
+	
 
 	// Probably call SDL_FillRect or SDL_BlitSurface a bunch here :-)
 
