@@ -24,10 +24,18 @@ Model::Model() {
 	destination_car.y = 530;
 	destination_car.x = 490;
 	
+<<<<<<< HEAD
 	p = 2;
 	
 	//at start of game, game is NOT over
 	game_over = false;
+=======
+	source_obstacle.x = 0;
+	source_obstacle.y = 101;
+	source_obstacle.w = 80;
+	source_obstacle.h = 1;
+	destination_obstacle.y = 0;
+	destination_obstacle.x = 490;
 	
 	scoreCounter.x = 7;
 	scoreCounter.y = 3;
@@ -40,6 +48,7 @@ Model::Model() {
 	
 	MESSAGE_SHADOW.x = 235;
 	MESSAGE_SHADOW.y = 332;
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 }
 // Destructor deletes dynamically allocated memory
 Model::~Model() {
@@ -47,18 +56,26 @@ Model::~Model() {
 }
 
 bool Model::gameOver() {
+<<<<<<< HEAD
 	//collision detection  						Doesnt work half the time when hitting obstacle from the right side. FIX***********
 	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++) {
 		game_over = (((it->dest.y + it->source.h) >= 530) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
 	}
 	return game_over;
+=======
+	//collision detection
+       // return (((destination_obstacle.y + destination_obstacle.h) >= 530 && (destination_obstacle.y + destination_obstacle.h) <= 720) &&
+		//	!(destination_car.x + 121 < destination_obstacle.x || destination_car.x > destination_obstacle.x + destination_obstacle.w));
+			
+			return false;
 }
 
-/**bool Model::collided() {
+bool Model::collided() {
 	//collision detection
     return (((destination_obstacle.y + destination_obstacle.h) >= 530 && (destination_obstacle.y + destination_obstacle.h) <= 720) &&
 			!(destination_car.x + 121 < destination_obstacle.x || destination_car.x > destination_obstacle.x + destination_obstacle.w));
-}*/
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
+}
 
 void Model::go(Direction d)
 {
@@ -66,7 +83,7 @@ void Model::go(Direction d)
 	return;
 }
 
-void Model::calculate(/*Model * model*/)
+void Model::calculate(Model * model)
 {
 	currentTime = SDL_GetTicks();
 	if(currentTime - lastTime > 1000)
@@ -75,30 +92,41 @@ void Model::calculate(/*Model * model*/)
 		lastTime = currentTime;
 	}
 	
-
-	if(currentTime > 30000 && source_road_2.y == 720)
+/* Speed phases - for later
+	if(currentTime > 5000 && source_road_2.y == 720)
 	{
 		MULTIPLIER = 2;
-		OFFSET = 3;
+		OFFSET = 30;
 	}
 	
-	if(currentTime > 60000 && source_road_2.y == 720)
+	if(currentTime > 10000 && source_road_2.y == 720)
 	{
 		MULTIPLIER = 3;
-		OFFSET = 4;
+		OFFSET = 40;
 	}
-
+*/
 		
 	//update bottom part of road image
-	source_road_1.h -= MULTIPLIER;// = source_road_1.h - 1;
-	destination_road_1.y += MULTIPLIER;// = destination_road_1.y + 1;
+<<<<<<< HEAD
+	source_road_1.h = source_road_1.h - p;
+    destination_road_1.y = destination_road_1.y + p;
+=======
+	source_road_1.h -= 1*MULTIPLIER;// = source_road_1.h - 1;
+	destination_road_1.y += 1*MULTIPLIER;// = destination_road_1.y + 1;
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 	
 
 	//update top part of road image
-    source_road_2.y -= MULTIPLIER;// = source_road_2.y - 1;
-    source_road_2.h += MULTIPLIER;// = source_road_2.h + 1;
+<<<<<<< HEAD
+    source_road_2.y = source_road_2.y - p;
+    source_road_2.h = source_road_2.h + p; 
+	
+=======
+    source_road_2.y -= 1 * MULTIPLIER;// = source_road_2.y - 1;
+    source_road_2.h += 1*MULTIPLIER;// = source_road_2.h + 1;
 
 
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 	//reset road image after every loop through
 	if (source_road_2.y == 0 || source_road_2.h == 720) {
 		source_road_1.h = 720;
@@ -110,27 +138,28 @@ void Model::calculate(/*Model * model*/)
 	//updates car position
 	switch(direction)
 	{
+<<<<<<< HEAD
+		case LEFT: destination_car.x = destination_car.x - 2;
+		break;
+		case RIGHT: destination_car.x = destination_car.x + 2;
+=======
 		case LEFT: destination_car.x = destination_car.x - OFFSET;
 		break;
 		case RIGHT: destination_car.x = destination_car.x + OFFSET;
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 		break;
 		case STAGNANT:
 		break;
 	}
 	
-	if(destination_car.x < 200)
-		destination_car.x += 50;
-	
-	if(destination_car.x > 1000)
-		destination_car.x -= 50;
-	
+<<<<<<< HEAD
 	//update obstacle positions
 	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++) {
-		it->dest.y = it->dest.y + MULTIPLIER;	
+		it->dest.y = it->dest.y + p;	
 			if (it->source.y > 0) {
-				it->source.y = it->source.y - MULTIPLIER;
-				it->source.h = it->source.h + MULTIPLIER;
-				it->dest.y = it->dest.y - MULTIPLIER;
+				it->source.y = it->source.y - p;
+				it->source.h = it->source.h + p;
+				it->dest.y = it->dest.y - p;
 		}
 		//check if image is off screen. if so, pop that ish outa hurr
 		if (it->dest.y > 720) {
@@ -138,6 +167,20 @@ void Model::calculate(/*Model * model*/)
 			//given time is the first element (oldest one)
 			obstacles.pop_front();
 		}
+=======
+	if(destination_car.x < 200)
+		destination_car.x += 100;
+	
+	if(destination_car.x > 1000)
+		destination_car.x -= 100;
+	
+	//update obstacle position
+	destination_obstacle.y++;
+	if (source_obstacle.y > 0) {
+		source_obstacle.y--;
+		source_obstacle.h++;
+		destination_obstacle.y--;
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 	}
 	return;
 }

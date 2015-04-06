@@ -52,8 +52,13 @@ void Controller::loop() {
                 case SDLK_RIGHT:
 					keyDown = true;
 					model->go(direction[e.key.keysym.sym]);
-					//model->calculate(model);
+<<<<<<< HEAD
+					model->calculate();
 					break;
+=======
+					//model->calculate(model);
+                break;
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
                 default:
                 break;
                 }	
@@ -85,6 +90,6 @@ void Controller::loop() {
     }
     // TODO: show something nice?
     view->show(model);
-    SDL_Delay(2000);
+    SDL_Delay(500);
 }
 

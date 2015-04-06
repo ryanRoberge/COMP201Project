@@ -1,8 +1,11 @@
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+<<<<<<< HEAD
 #include <list>
+=======
 #include <string>
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 
 #ifndef _MODEL_H
 #define _MODEL_H
@@ -29,12 +32,12 @@ public:
 	std::string message = "";
 	
 	int MULTIPLIER = 1;
-	int OFFSET = 2;
+	int OFFSET = 20;
 	
 	int currentTime = 0;
 	int lastTime = 0;
 	
-	/*int sourceRoad1_w = 1280;
+	int sourceRoad1_w = 1280;
 	int sourceRoad1_h = 720;
 	
 	int sourceRoad2_w = 1280;
@@ -53,7 +56,7 @@ public:
 	int destinationRoad2_x = 0;
 	
 	int destinationCar_y = 555;
-	int destinationCar_x = 490;*/
+	int destinationCar_x = 490;
 
     // Constructor (instantiates object)
     Model();
@@ -61,24 +64,35 @@ public:
     ~Model();
     // Is the game over?
     bool gameOver();
+<<<<<<< HEAD
 	//game over token
 	bool game_over;
+=======
 	
 	bool collided();
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 	//direction of car
 	Direction direction;
 	//update direction of car
 	void go(Direction d);
 	//update locations of images
-	void calculate(/*Model * model*/);
+<<<<<<< HEAD
+	void calculate();
 	//how many pixels will the objects redraw at a time
 	int p; ///using a short name because it comes up so much and im lazy
 	//obstacles
 	std::list<Debris> obstacles;
 
 	//SDL location variables for images
-	SDL_Rect source_road_1, source_road_2, scoreCounter, scoreCounterShadow, MESSAGE, MESSAGE_SHADOW;
+	SDL_Rect source_road_1, source_road_2;
 	SDL_Rect destination_road_1, destination_road_2, destination_car;
+=======
+	void calculate(Model * model);
+
+	//SDL location variables for images
+	SDL_Rect source_road_1, source_road_2, source_obstacle, scoreCounter, scoreCounterShadow, MESSAGE, MESSAGE_SHADOW;
+	SDL_Rect destination_road_1, destination_road_2, destination_car, destination_obstacle;
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 	
 };
 

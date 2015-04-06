@@ -27,3 +27,7 @@ Phases: (Day / Night) every minute
 	- At Night (limited visibility but 2x points)
 Day Music changes
 File-IO for local high score counter; 
+
+-----------------------------------------------------
+git fetch 'user'
+git merge 'user' master (to merge work ive pulled)

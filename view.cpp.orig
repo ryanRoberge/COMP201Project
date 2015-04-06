@@ -54,6 +54,7 @@ View::View(string title, int width, int height) {
     if (car == NULL) {
         return;
     }
+<<<<<<< HEAD
 	//make background of car transparent
 	SDL_SetColorKey( car, SDL_TRUE, SDL_MapRGB( car->format, 255, 255, 255 ) );
 	
@@ -67,6 +68,12 @@ View::View(string title, int width, int height) {
 		SDL_SetColorKey( obst[i], SDL_TRUE, SDL_MapRGB( obst[i]->format, 255, 255, 255 ) );
 	}
 
+=======
+	cage = load("assets/cage.png"); 
+    if (cage == NULL) {
+        return;
+    }
+	
 	//Initialize SDL_ttf
     if( TTF_Init() == -1 )
     {
@@ -81,6 +88,7 @@ View::View(string title, int width, int height) {
         return;
     }
 	
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 }
 
 View::~View() {
@@ -130,15 +138,10 @@ void View::show(Model * model) {
 	}
 	
 	textScore = "Points: " + to_string(model->score);
-	
-	if(SDL_GetTicks() > 25000)
+	if(SDL_GetTicks() > 5000)
 		model->message = "YOU'VE SURVIVED THIS FAR, READY TO SPEED THINGS UP?";
-	if(SDL_GetTicks() > 30000)
-		model->message = "";
-	if(SDL_GetTicks() > 55000)
-		model->message = "                              YOU'LL NEVER MAKE IT.";
-	if(SDL_GetTicks() > 60000)
-		model->message = "";	
+	if(SDL_GetTicks() > 10000)
+		model->message = "YOU'LL NEVER MAKE IT.";
 
 	scoreCounter = TTF_RenderText_Solid( font, textScore.c_str(), textColor );
 	scoreCounterShadow = TTF_RenderText_Solid( font, textScore.c_str(), shadowColor );

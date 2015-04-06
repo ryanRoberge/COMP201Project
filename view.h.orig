@@ -19,9 +19,12 @@ public:
     ~View();
     // Print out the visible stuff in the grid
     void show(Model * model);
+<<<<<<< HEAD
 	//obstacles
 	SDL_Surface* obst[3];
+=======
 	std::string to_string(int x);
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 
 private:
     SDL_Window* window;
@@ -29,9 +32,14 @@ private:
 	//object road and car
 	SDL_Surface* road;
 	SDL_Surface* car;
+<<<<<<< HEAD
     bool fail;
 	//load images
 	SDL_Surface* load(char * path);
+=======
+	//obstacle 1
+	SDL_Surface* cage;
+
 	SDL_Surface *scoreCounter = NULL;
 	SDL_Surface *scoreCounterShadow = NULL;
 	
@@ -49,6 +57,7 @@ private:
 	std::string textScore;
 	
 	
+>>>>>>> 9a519f25b05ac96af3ccd85186ec439fc5319feb
 //    SDL_Surface* text;
 //    Mix_Music * music;
 //    Mix_Chunk * food;
