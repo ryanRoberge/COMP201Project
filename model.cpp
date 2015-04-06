@@ -124,6 +124,15 @@ void Model::calculate(/*Model * model*/)
 	if(destination_car.x > 1000)
 		destination_car.x -= 50;
 	
+	/*
+	if(SDL_GetTicks() > 20000)
+	{
+	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++)
+		obstacles.pop_back();
+			
+	}
+	*/
+	
 	//update obstacle positions
 	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++) {
 		it->dest.y = it->dest.y + MULTIPLIER;	

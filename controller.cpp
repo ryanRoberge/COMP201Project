@@ -6,7 +6,7 @@ using namespace std;
 
 Controller::Controller() {
     model = new Model();
-    view = new View("An Ode to Pole Position", 1280, 720);
+    view = new View("An Ode to Pro Monaco", 1280, 720);
 	
 	//for random obstacle generation
 	srand(time(0));
@@ -71,6 +71,7 @@ void Controller::loop() {
 			model->calculate();
 		}
 		//every two seconds, add a new debris to the obstacles list
+		if((SDL_GetTicks() < 20000 || SDL_GetTicks() > 33000) && (SDL_GetTicks() < 50000 || SDL_GetTicks() > 63000))
 		if (deltaTime > obst_gen_rate) {
 			//reset obstacle generation rate
 			obst_gen_rate = (rand() % 1250) + 500;

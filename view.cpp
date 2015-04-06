@@ -42,7 +42,7 @@ View::View(string title, int width, int height) {
 //       Mix_PlayMusic( music, -1 );
 //    }
 //    food = Mix_LoadWAV("assets/yummy.wav");
-    font = TTF_OpenFont( "assets/LiberationSans-Regular.ttf", 28 );
+    font = TTF_OpenFont( "assets/LiberationSans-Regular.ttf", 24 );
 	
 	//load road picture
 	road = load("assets/road.png"); 
@@ -129,14 +129,14 @@ void View::show(Model * model) {
 		SDL_BlitSurface( it->debris_image, &(it->source), screen, &(it->dest) );
 	}
 	
-	textScore = "Points: " + to_string(model->score);
+	textScore = "Points: " + to_string(model->score) + " (" + to_string(model->MULTIPLIER) + "X)";
 	
 	if(SDL_GetTicks() > 25000)
-		model->message = "YOU'VE SURVIVED THIS FAR, READY TO SPEED THINGS UP?";
+		model->message = "        YOU'VE SURVIVED THIS FAR, READY TO SPEED THINGS UP?";
 	if(SDL_GetTicks() > 30000)
 		model->message = "";
 	if(SDL_GetTicks() > 55000)
-		model->message = "                              YOU'LL NEVER MAKE IT.";
+		model->message = "                       NOT BAD, BUT CAN YOU HANDLE 3X SPEED";
 	if(SDL_GetTicks() > 60000)
 		model->message = "";	
 
