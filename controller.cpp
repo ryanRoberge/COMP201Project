@@ -71,7 +71,7 @@ void Controller::loop() {
 			model->calculate();
 		}
 		//every two seconds, add a new debris to the obstacles list
-		if((SDL_GetTicks() < 20000 || SDL_GetTicks() > 33000) && (SDL_GetTicks() < 50000 || SDL_GetTicks() > 63000))
+		if((SDL_GetTicks() > 5000) && (SDL_GetTicks() < 20000 || SDL_GetTicks() > 33000) && (SDL_GetTicks() < 50000 || SDL_GetTicks() > 63000))
 		if (deltaTime > obst_gen_rate) {
 			//reset obstacle generation rate
 			obst_gen_rate = (rand() % 1250) + 500;

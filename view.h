@@ -48,9 +48,10 @@ private:
 	
 	std::string textScore;
 	
+	Mix_Music * music;
+
 	
 //    SDL_Surface* text;
-//    Mix_Music * music;
 //    Mix_Chunk * food;
 };
 #endif

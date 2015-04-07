@@ -37,10 +37,10 @@ View::View(string title, int width, int height) {
     }
     // Load assets
 //    snake = load("assets/snake.png");
-//    music = Mix_LoadMUS("assets/2Inventions_-_Johaness_Gilther_-_Don_t_leave_me.mp3");
-//    if (music != NULL) {
-//       Mix_PlayMusic( music, -1 );
-//    }
+    music = Mix_LoadMUS("assets/music.mp3");
+  if (music != NULL) {
+     Mix_PlayMusic( music, -1 );
+	}
 //    food = Mix_LoadWAV("assets/yummy.wav");
     font = TTF_OpenFont( "assets/LiberationSans-Regular.ttf", 24 );
 	
@@ -55,7 +55,7 @@ View::View(string title, int width, int height) {
         return;
     }
 	//make background of car transparent
-	SDL_SetColorKey( car, SDL_TRUE, SDL_MapRGB( car->format, 255, 255, 255 ) );
+	SDL_SetColorKey( car, SDL_TRUE, SDL_MapRGB( car->format, 20, 20, 20 ) );
 	
 	//load obstacles
 	char paths[] = "assets/1.png";
