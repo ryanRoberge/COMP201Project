@@ -156,5 +156,10 @@ void View::show(Model * model) {
 
     SDL_UpdateWindowSurface(window);
 	
+	SDL_FreeSurface(scoreCounter);
+	SDL_FreeSurface(scoreCounterShadow);
+	SDL_FreeSurface(message);
+	SDL_FreeSurface(messageShadow);
+
 	return;
 }

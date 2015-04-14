@@ -72,7 +72,6 @@ public:
 	//update locations of images
 	void calculate(/*Model * model*/);
 	//how many pixels will the objects redraw at a time
-	int p; ///using a short name because it comes up so much and im lazy
 	//obstacles
 	std::list<Debris> obstacles;
 

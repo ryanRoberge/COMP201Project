@@ -24,8 +24,6 @@ Model::Model() {
 	destination_car.y = 530;
 	destination_car.x = 490;
 	
-	p = 2;
-	
 	//at start of game, game is NOT over
 	game_over = false;
 	
@@ -50,6 +48,8 @@ bool Model::gameOver() {
 	//collision detection  						Doesnt work half the time when hitting obstacle from the right side. FIX***********
 	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++) {
 		game_over = (((it->dest.y + it->source.h) >= 530) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
+		if(game_over == true)
+			break;
 	}
 	return game_over;
 }
@@ -145,7 +145,7 @@ void Model::calculate(/*Model * model*/)
 		if (it->dest.y > 720) {
 			//just do pop_front instead of getting rid of the specific debris because the only obstacle which will be this far down at any 
 			//given time is the first element (oldest one)
-			obstacles.pop_front();
+		obstacles.pop_front();
 		}
 	}
 	return;
