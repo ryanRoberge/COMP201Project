@@ -35,7 +35,7 @@ public:
 	
 	int currentTime = 0;
 	int lastTime = 0;
-	int startTime = 2000;
+	int startTime = -1000000;
 	/*int sourceRoad1_w = 1280;
 	int sourceRoad1_h = 720;
 	
