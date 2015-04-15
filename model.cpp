@@ -47,7 +47,7 @@ Model::~Model() {
 bool Model::gameOver() {
 	//collision detection  						Doesnt work half the time when hitting obstacle from the right side. FIX***********
 	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++) {
-		game_over = (((it->dest.y + it->source.h) >= 530) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
+		game_over = (((it->dest.y + it->source.h) >= 530) && (it->dest.y + it->source.h < 720) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
 		if(game_over == true)
 			break;
 	}
@@ -65,10 +65,20 @@ void Model::go(Direction d)
 	direction = d;
 	return;
 }
-
+void Model::start(){
+	startTime=SDL_GetTicks();
+	startLoop=true;
+}
 void Model::calculate(/*Model * model*/)
 {
-	currentTime = SDL_GetTicks();
+	if(startLoop){
+	currentTime = SDL_GetTicks() - startTime;
+	if(currentTime > 5000 && currentTime < 20000){// || currentTime > 33000 && currentTime < 50000 || currentTime > 63000){
+		spawnDebris = true;
+	}else{
+		spawnDebris = false;
+	}
+
 	if(currentTime - lastTime > 1000)
 	{
 		score += 100*MULTIPLIER;
@@ -87,7 +97,7 @@ void Model::calculate(/*Model * model*/)
 		MULTIPLIER = 3;
 		OFFSET = 4;
 	}
-
+	}
 		
 	//update bottom part of road image
 	source_road_1.h -= MULTIPLIER;// = source_road_1.h - 1;
@@ -145,7 +155,7 @@ void Model::calculate(/*Model * model*/)
 		if (it->dest.y > 720) {
 			//just do pop_front instead of getting rid of the specific debris because the only obstacle which will be this far down at any 
 			//given time is the first element (oldest one)
-		obstacles.pop_front();
+		//obstacles.pop_front();
 		}
 	}
 	return;

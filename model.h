@@ -30,10 +30,12 @@ public:
 	
 	int MULTIPLIER = 1;
 	int OFFSET = 2;
+	bool spawnDebris = false;
+	bool startLoop = false;
 	
 	int currentTime = 0;
 	int lastTime = 0;
-	
+	int startTime = 2000;
 	/*int sourceRoad1_w = 1280;
 	int sourceRoad1_h = 720;
 	
@@ -59,6 +61,7 @@ public:
     Model();
     // Destructor deletes all dynamically allocated stuff
     ~Model();
+    void start();
     // Is the game over?
     bool gameOver();
 	//game over token
