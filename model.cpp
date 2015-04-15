@@ -68,12 +68,17 @@ void Model::go(Direction d)
 void Model::start(){
 	startTime=SDL_GetTicks();
 	startLoop=true;
+
+}
+int Model::timeOffset(){
+	return SDL_GetTicks() - startTime;
+
 }
 void Model::calculate(/*Model * model*/)
 {
+	currentTime = timeOffset();
 	if(startLoop){
-	currentTime = SDL_GetTicks() - startTime;
-	if(currentTime > 5000 && currentTime < 20000){// || currentTime > 33000 && currentTime < 50000 || currentTime > 63000){
+	if(currentTime > 5000 && (currentTime < 20000 || currentTime > 33000) && (currentTime < 50000 || currentTime > 63000)){
 		spawnDebris = true;
 	}else{
 		spawnDebris = false;

@@ -64,6 +64,7 @@ public:
     void start();
     // Is the game over?
     bool gameOver();
+    int timeOffset();
 	//game over token
 	bool game_over;
 	
