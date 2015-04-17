@@ -59,12 +59,12 @@ View::View(string title, int width, int height) {
 	
 	//load obstacles
 	char paths[] = "assets/1.png";
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 5; i++) {
 		obst[i] = load(paths);
 		paths[7]++;
 		if (obst[i] == NULL) {return;}
 		//make background of obstacles transparent
-		SDL_SetColorKey( obst[i], SDL_TRUE, SDL_MapRGB( obst[i]->format, 255, 255, 255 ) );
+		SDL_SetColorKey( obst[i], SDL_TRUE, SDL_MapRGB( obst[i]->format, 19, 19, 20 ) );
 	}
 
 	//Initialize SDL_ttf
@@ -129,15 +129,15 @@ void View::show(Model * model) {
 		SDL_BlitSurface( it->debris_image, &(it->source), screen, &(it->dest) );
 	}
 	
-	textScore = "Points: " + to_string(model->score) + " (" + to_string(model->MULTIPLIER) + "X)";
-	
-	if(SDL_GetTicks() > 25000)
+	textScore = "Points: " + to_string(model->score) + " (" + to_string(model->SCORE_MULTIPLIER) + "X)";
+	int curTime = model->timeOffset();
+	if(curTime > 25000)
 		model->message = "        YOU'VE SURVIVED THIS FAR, READY TO SPEED THINGS UP?";
-	if(SDL_GetTicks() > 30000)
+	if(curTime > 30000)
 		model->message = "";
-	if(SDL_GetTicks() > 55000)
+	if(curTime > 55000)
 		model->message = "                       NOT BAD, BUT CAN YOU HANDLE 3X SPEED";
-	if(SDL_GetTicks() > 60000)
+	if(curTime > 60000)
 		model->message = "";	
 
 	scoreCounter = TTF_RenderText_Solid( font, textScore.c_str(), textColor );

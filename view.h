@@ -20,7 +20,7 @@ public:
     // Print out the visible stuff in the grid
     void show(Model * model);
 	//obstacles
-	SDL_Surface* obst[3];
+	SDL_Surface* obst[5];
 	std::string to_string(int x);
 
 private:
