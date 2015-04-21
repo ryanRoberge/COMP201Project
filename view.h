@@ -8,7 +8,7 @@
 #include <sstream>
 #include <string>
 #include <iostream>
-
+#include <vector>
 #ifndef _VIEW_H
 #define _VIEW_H
 
@@ -17,8 +17,8 @@ class View {
 public:
     View(std::string title, int width, int height);
     ~View();
-    // Print out the visible stuff in the grid
-    void show(Model * model);
+    // Print out the visible stuff in the grid  
+	void show(Model * model);
 	//obstacles
 	SDL_Surface* obst[3];
 	std::string to_string(int x);
@@ -29,7 +29,7 @@ private:
 	//object road and car
 	SDL_Surface* road;
 	SDL_Surface* car;
-    bool fail;
+	bool fail;    
 	//load images
 	SDL_Surface* load(char * path);
 	SDL_Surface *scoreCounter = NULL;
@@ -37,9 +37,11 @@ private:
 	
 	SDL_Surface *message = NULL;
 	SDL_Surface *messageShadow = NULL;
-	
+	std::vector<SDL_Surface*> menu;
 	//The font that's going to be used
 	TTF_Font *font = NULL;
+	TTF_Font *menuFont = NULL;
+	TTF_Font *menuFontSelected = NULL;
 
 	//The color of the font
 	SDL_Color textColor = { 255, 255, 255 };

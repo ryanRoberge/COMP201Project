@@ -25,7 +25,8 @@ Model::Model() {
 	destination_car.x = 490;
 	
 	//at start of game, game is NOT over
-	game_over = false;
+	game_over = false;	
+	game_over2 = false;
 	
 	scoreCounter.x = 7;
 	scoreCounter.y = 3;
@@ -35,9 +36,19 @@ Model::Model() {
 	
 	MESSAGE.x = 233;
 	MESSAGE.y = 330;
-	
 	MESSAGE_SHADOW.x = 235;
 	MESSAGE_SHADOW.y = 332;
+	menuMessage.push_back("Play Game");
+	menuMessage.push_back("High Score Table");
+	menuMessage.push_back("Exit Game");
+	for(int i = 0; i < menuMessage.size(); ++i){
+		SDL_Rect r;
+		menu.push_back(r);
+		menu[i].y=(i+1)*150;
+		menu[i].x=233;
+	}
+
+
 }
 // Destructor deletes dynamically allocated memory
 Model::~Model() {
@@ -47,11 +58,30 @@ Model::~Model() {
 bool Model::gameOver() {
 	//collision detection  						Doesnt work half the time when hitting obstacle from the right side. FIX***********
 	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++) {
-		game_over = (((it->dest.y + it->source.h) >= 530) && (it->dest.y + it->source.h < 720) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
-		if(game_over == true)
-			break;
+		game_over = (((it->dest.y + it->source.h) >= 530) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
+		if(game_over && startLoop)
+			return true;
 	}
-	return game_over;
+	return false;
+}
+void Model::reset(){	
+	if(startLoop){	
+		prevScore = score;
+		startLoop=false;
+		game_over = false;
+		game_over2 = false;
+		spawnDebris = false;
+		selected = 0;
+		MULTIPLIER = 1;
+		OFFSET = 2;
+		currentTime = 0;
+		lastTime = 0;
+		startTime = -1000000;
+		music = "assets/menuMusic.mp3";
+		changeMusic = true;
+		highScore(prevScore);
+		obstacles.clear();
+	}
 }
 
 /**bool Model::collided() {
@@ -66,18 +96,40 @@ void Model::go(Direction d)
 	return;
 }
 void Model::start(){
-	startTime=SDL_GetTicks();
-	startLoop=true;
-
+	if(selected==0){
+		startTime=SDL_GetTicks();
+		startLoop=true;
+		changeMusic=true;
+		music = "assets/horn.mp3";
+		score = 0;
+		game_over2 = true;
+	}else if(selected==1){
+	}else if(selected==2){
+		std::exit(1);
+	}
+	
 }
 int Model::timeOffset(){
 	return SDL_GetTicks() - startTime;
 
 }
+void Model::highScore(int score){
+	string line;
+	ifstream scores ("assets/scores.data");
+	if(scores.is_open()){
+		while ( getline (scores,line) ){
+			cout << line << '\n';
+		}
+	}
+}
 void Model::calculate(/*Model * model*/)
 {
 	currentTime = timeOffset();
 	if(startLoop){
+	if(currentTime > 4300 && music == "assets/horn.mp3"){
+		music = "assets/music.mp3";
+		changeMusic = true;
+	}
 	if(currentTime > 5000 && (currentTime < 20000 || currentTime > 33000) && (currentTime < 50000 || currentTime > 63000)){
 		spawnDebris = true;
 	}else{

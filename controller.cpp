@@ -36,7 +36,10 @@ void Controller::loop() {
 	//used to eliminate key lag. switched to true when key is pressed; even if program doesnt realize key is still being pressed for a second,
 	//this bool will ensure car moves anyways until the program catches up and realizes the key is still being held 
 	bool keyDown = false;
-	while(!model->gameOver()) {
+	while(true){ //!model->gameOver()) {
+	if(model->gameOver()){
+		model->reset();
+	}
         currentTime = SDL_GetTicks();
         deltaTime = (currentTime - lastTime);
 		
@@ -50,13 +53,27 @@ void Controller::loop() {
 		switch(e.key.keysym.sym) {
                 case SDLK_LEFT:
                 case SDLK_RIGHT:
-					keyDown = true;
-					model->go(direction[e.key.keysym.sym]);
-					//model->calculate(model);
-					break;
+			keyDown = true;
+			model->go(direction[e.key.keysym.sym]);
+			//model->calculate(model);
+			break;
                 case SDLK_RETURN:
-					model->start();
-					break;
+			model->start();
+			break;
+		case SDLK_UP:
+			if(model->selected==0){
+			model->selected=2;
+			}else{
+			model->selected--;
+			}
+			break;
+		case SDLK_DOWN:
+			if(model->selected==2){
+				model->selected=0;
+			}else{
+				model->selected++;
+			}
+			break;
 		default:
                 break;
                 }	

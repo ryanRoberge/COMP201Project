@@ -3,7 +3,9 @@
 #include <SDL2/SDL_image.h>
 #include <list>
 #include <string>
-
+#include <vector>
+#include <iostream>
+#include <fstream>
 #ifndef _MODEL_H
 #define _MODEL_H
 
@@ -32,10 +34,14 @@ public:
 	int OFFSET = 2;
 	bool spawnDebris = false;
 	bool startLoop = false;
-	
+	bool changeMusic = true;
+	std::vector<std::string> menuMessage;
 	int currentTime = 0;
 	int lastTime = 0;
 	int startTime = -1000000;
+	int selected = 1;
+	char* music = "assets/menuMusic.mp3";
+	int prevScore = 0;
 	/*int sourceRoad1_w = 1280;
 	int sourceRoad1_h = 720;
 	
@@ -64,9 +70,13 @@ public:
     void start();
     // Is the game over?
     bool gameOver();
+    void reset();
+    void highScore(int score);
+
     int timeOffset();
 	//game over token
 	bool game_over;
+	bool game_over2;
 	
 	bool collided();
 	//direction of car
@@ -82,7 +92,7 @@ public:
 	//SDL location variables for images
 	SDL_Rect source_road_1, source_road_2, scoreCounter, scoreCounterShadow, MESSAGE, MESSAGE_SHADOW;
 	SDL_Rect destination_road_1, destination_road_2, destination_car;
-	
+	std::vector<SDL_Rect> menu;
 };
 
 #endif

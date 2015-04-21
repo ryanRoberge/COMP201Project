@@ -37,13 +37,14 @@ View::View(string title, int width, int height) {
     }
     // Load assets
 //    snake = load("assets/snake.png");
-    music = Mix_LoadMUS("assets/music.mp3");
+    //music = Mix_LoadMUS("assets/menuMusic.mp3");
   if (music != NULL) {
      Mix_PlayMusic( music, -1 );
 	}
 //    food = Mix_LoadWAV("assets/yummy.wav");
     font = TTF_OpenFont( "assets/LiberationSans-Regular.ttf", 24 );
-	
+    menuFont = TTF_OpenFont("assets/LiberationSans-Regular.ttf", 30);
+    menuFontSelected = TTF_OpenFont("assets/LiberationSans-Regular.ttf", 45);
 	//load road picture
 	road = load("assets/road.png"); 
     if (road == NULL) {
@@ -54,6 +55,8 @@ View::View(string title, int width, int height) {
     if (car == NULL) {
         return;
     }
+
+
 	//make background of car transparent
 	SDL_SetColorKey( car, SDL_TRUE, SDL_MapRGB( car->format, 20, 20, 20 ) );
 	
@@ -81,6 +84,10 @@ View::View(string title, int width, int height) {
         return;
     }
 	
+
+	menu.resize(3);
+
+
 }
 
 View::~View() {
@@ -107,7 +114,6 @@ SDL_Surface* View::load(char * path) {
     
     return optimizedSurface;
 }
-
 string View::to_string(int x)
 {
 	std::ostringstream os ;
@@ -117,6 +123,11 @@ string View::to_string(int x)
 
 void View::show(Model * model) {
 
+	if(model->changeMusic){
+		model->changeMusic=false;
+		music = Mix_LoadMUS(model->music);
+		Mix_PlayMusic( music, -1 );
+	}
 	//not needed i guess?
 	/*SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format,
         0x00, 0x00, 0x00));*/
@@ -129,7 +140,7 @@ void View::show(Model * model) {
 		SDL_BlitSurface( it->debris_image, &(it->source), screen, &(it->dest) );
 	}
 	
-	textScore = "Points: " + to_string(model->score) + " (" + to_string(model->MULTIPLIER) + "X)";
+	textScore = "Score: " + to_string(model->score) + " (" + to_string(model->MULTIPLIER) + "X) Previous Score: " + to_string(model-> prevScore);
 	int curTime = model->timeOffset();
 	if(curTime > 25000)
 		model->message = "        YOU'VE SURVIVED THIS FAR, READY TO SPEED THINGS UP?";
@@ -139,7 +150,18 @@ void View::show(Model * model) {
 		model->message = "                       NOT BAD, BUT CAN YOU HANDLE 3X SPEED";
 	if(curTime > 60000)
 		model->message = "";	
-
+	if(!model->startLoop){
+		for(int i = 0; i < menu.size(); i++){
+			if(i==model->selected){
+				menu[i] = TTF_RenderText_Solid(menuFontSelected, model->menuMessage[i].c_str(),messageColor);
+				SDL_BlitSurface(menu[i],NULL,screen,&(model->menu[i]));
+			}else{
+				menu[i] = TTF_RenderText_Solid(menuFont, model->menuMessage[i].c_str(),messageColor);
+				SDL_BlitSurface(menu[i],NULL,screen,&(model->menu[i]));
+			}
+		}
+	
+	}
 	scoreCounter = TTF_RenderText_Solid( font, textScore.c_str(), textColor );
 	scoreCounterShadow = TTF_RenderText_Solid( font, textScore.c_str(), shadowColor );
 	
