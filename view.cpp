@@ -62,12 +62,12 @@ View::View(string title, int width, int height) {
 	
 	//load obstacles
 	char paths[] = "assets/1.png";
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 5; i++) {
 		obst[i] = load(paths);
 		paths[7]++;
 		if (obst[i] == NULL) {return;}
-		//make background of obstacles transparent
-		SDL_SetColorKey( obst[i], SDL_TRUE, SDL_MapRGB( obst[i]->format, 255, 255, 255 ) );
+		//make background of  transparent
+		SDL_SetColorKey( obst[i], SDL_TRUE, SDL_MapRGB( obst[i]->format, 19, 19, 20 ) );
 	}
 
 	//Initialize SDL_ttf
@@ -140,7 +140,7 @@ void View::show(Model * model) {
 		SDL_BlitSurface( it->debris_image, &(it->source), screen, &(it->dest) );
 	}
 	
-	textScore = "Score: " + to_string(model->score) + " (" + to_string(model->MULTIPLIER) + "X) Previous Score: " + to_string(model-> prevScore);
+	textScore = "Score: " + to_string(model->score) + " (" + to_string(model->MULTIPLIER*model->SCORE_MULTIPLIER) + "X) Previous Score: " + to_string(model-> prevScore);
 	int curTime = model->timeOffset();
 	if(curTime > 25000)
 		model->message = "        YOU'VE SURVIVED THIS FAR, READY TO SPEED THINGS UP?";

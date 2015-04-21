@@ -98,8 +98,10 @@ void Controller::loop() {
 			//reset clock
 			lastTime = currentTime;
 			Debris * debris = new Debris;
-			debris->debris_image = view->obst[rand() % 3];
+			int x = rand() % 5;
+			debris->debris_image = view->obst[x];
 			debris->dest.x = 90 + 200*((rand() % 4) + 1);
+			debris->img_num = x;
 			(model->obstacles).push_back(*debris);
 			delete debris;
 		}

@@ -55,14 +55,39 @@ Model::~Model() {
 	
 }
 
-bool Model::gameOver() {
+/*bool Model::gameOver() {
 	//collision detection  						Doesnt work half the time when hitting obstacle from the right side. FIX***********
 	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++) {
-		game_over = (((it->dest.y + it->source.h) >= 530) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
+		game_over = (((it->dest.y + it->source.h) >= 530) && ((it->dest.y + it->source.h) < 720) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
+		if (it->img_num == 4 && game_over == true) {
+			game_over = false;
+			SCORE_MULTIPLIER +=2;
+			if (SCORE_MULTIPLIER ==3) {
+				SCORE_MULTIPLIER -=1;
+			}
+			obstacles.pop_front();
+		}
 		if(game_over && startLoop)
 			return true;
 	}
 	return false;
+}*/
+bool Model::gameOver() {
+	//collision detection  						Doesnt work half the time when hitting obstacle from the right side. FIX***********
+	for (std::list<Debris>::iterator it = obstacles.begin(); it != obstacles.end(); it++) {
+		game_over = (((it->dest.y + it->source.h) >= 530)  && ((it->dest.y + it->source.h) < 720) && !(destination_car.x + 121 < it->dest.x || destination_car.x > it->dest.x + it->source.w));
+		if (it->img_num == 4 && game_over == true) {
+			game_over = false;
+			SCORE_MULTIPLIER +=2;
+			if (SCORE_MULTIPLIER ==3) {
+				SCORE_MULTIPLIER -=1;
+			}
+			obstacles.pop_front();
+		}
+		if(game_over == true)
+			break;
+	}
+	return game_over;
 }
 void Model::reset(){	
 	if(startLoop){	
@@ -73,6 +98,7 @@ void Model::reset(){
 		spawnDebris = false;
 		selected = 0;
 		MULTIPLIER = 1;
+		SCORE_MULTIPLIER = 1;
 		OFFSET = 2;
 		currentTime = 0;
 		lastTime = 0;
@@ -127,7 +153,7 @@ void Model::calculate(/*Model * model*/)
 	currentTime = timeOffset();
 	if(startLoop){
 	if(currentTime > 4300 && music == "assets/horn.mp3"){
-		music = "assets/music.mp3";
+		music = "assets/music3.mp3";
 		changeMusic = true;
 	}
 	if(currentTime > 5000 && (currentTime < 20000 || currentTime > 33000) && (currentTime < 50000 || currentTime > 63000)){
@@ -138,7 +164,7 @@ void Model::calculate(/*Model * model*/)
 
 	if(currentTime - lastTime > 1000)
 	{
-		score += 100*MULTIPLIER;
+		score += 100*MULTIPLIER*SCORE_MULTIPLIER;
 		lastTime = currentTime;
 	}
 	
@@ -212,7 +238,7 @@ void Model::calculate(/*Model * model*/)
 		if (it->dest.y > 720) {
 			//just do pop_front instead of getting rid of the specific debris because the only obstacle which will be this far down at any 
 			//given time is the first element (oldest one)
-		//obstacles.pop_front();
+		obstacles.pop_front();
 		}
 	}
 	return;

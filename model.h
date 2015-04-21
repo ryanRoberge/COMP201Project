@@ -21,6 +21,7 @@ public:
 	SDL_Rect dest;
 	//obstacle itself
 	SDL_Surface* debris_image;
+	int img_num;
 };
 
 // The model manages the state of the game
@@ -30,6 +31,7 @@ public:
 	int score = 0;
 	std::string message = "";
 	
+	int SCORE_MULTIPLIER = 1;
 	int MULTIPLIER = 1;
 	int OFFSET = 2;
 	bool spawnDebris = false;
