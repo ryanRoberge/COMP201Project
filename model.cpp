@@ -97,7 +97,7 @@ bool Model::gameOver() {
 			if (SCORE_MULTIPLIER ==3) {
 				SCORE_MULTIPLIER -=1;
 			}
-			//obstacles.pop_front();
+			obstacles.pop_front();
 		}
 		if(game_over == true)
 			break;
@@ -346,7 +346,7 @@ void Model::calculate(/*Model * model*/)
 		if (it->dest.y > 720) {
 			//just do pop_front instead of getting rid of the specific debris because the only obstacle which will be this far down at any 
 			//given time is the first element (oldest one)
-		//obstacles.pop_front();
+		obstacles.pop_front();
 		}
 	}
 	return;
