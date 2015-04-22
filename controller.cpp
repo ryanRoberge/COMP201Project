@@ -32,13 +32,14 @@ void Controller::loop() {
     float deltaTime = 0;
 	//creates a random time between .5 and 1.75 seconds. Next obstacle will spawn after this amount of time
 	int obst_gen_rate = (rand() % 1250) + 500;
-	//for random obstacle generation purposes
-	int x;
 
 	//used to eliminate key lag. switched to true when key is pressed; even if program doesnt realize key is still being pressed for a second,
 	//this bool will ensure car moves anyways until the program catches up and realizes the key is still being held 
 	bool keyDown = false;
-	while(!model->gameOver()) {
+	while(true){ //!model->gameOver()) {
+	if(model->gameOver()){
+		model->reset();
+	}
         currentTime = SDL_GetTicks();
         deltaTime = (currentTime - lastTime);
 		
@@ -52,13 +53,27 @@ void Controller::loop() {
 		switch(e.key.keysym.sym) {
                 case SDLK_LEFT:
                 case SDLK_RIGHT:
-					keyDown = true;
-					model->go(direction[e.key.keysym.sym]);
-					//model->calculate(model);
-					break;
+			keyDown = true;
+			model->go(direction[e.key.keysym.sym]);
+			//model->calculate(model);
+			break;
                 case SDLK_RETURN:
-					model->start();
-					break;
+			model->start();
+			break;
+		case SDLK_UP:
+			if(model->selected==0){
+			model->selected=2;
+			}else{
+			model->selected--;
+			}
+			break;
+		case SDLK_DOWN:
+			if(model->selected==2){
+				model->selected=0;
+			}else{
+				model->selected++;
+			}
+			break;
 		default:
                 break;
                 }	
@@ -83,7 +98,7 @@ void Controller::loop() {
 			//reset clock
 			lastTime = currentTime;
 			Debris * debris = new Debris;
-			x = rand() %5;
+			int x = rand() % 5;
 			debris->debris_image = view->obst[x];
 			debris->dest.x = 90 + 200*((rand() % 4) + 1);
 			debris->img_num = x;
