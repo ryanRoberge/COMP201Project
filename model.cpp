@@ -52,6 +52,12 @@ Model::Model() {
 		menu.push_back(r);
 		scoreListRect[i].y=(i+1)*50;
 		scoreListRect[i].x=1075;
+	}for(int i = 0; i < scoreListRectShadow.size(); ++i){
+		SDL_Rect r;
+		menu.push_back(r);
+		scoreListRectShadow[i].y=(i+1)*50;
+		scoreListRectShadow[i].y+=3;
+		scoreListRectShadow[i].x=1078;
 	}
 	for(int i = 0; i < menuMessage.size(); ++i){
 		SDL_Rect r;

@@ -39,6 +39,7 @@ private:
 	SDL_Surface *messageShadow = NULL;
 	std::vector<SDL_Surface*> menu;
 	std::vector<SDL_Surface*> scoreListSurface;
+	std::vector<SDL_Surface*> scoreListSurfaceShadow;
 	//The font that's going to be used
 	TTF_Font *font = NULL;
 	TTF_Font *menuFont = NULL;

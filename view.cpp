@@ -85,6 +85,7 @@ View::View(string title, int width, int height) {
     }
 	menu.resize(3);
 	scoreListSurface.resize(10);
+	scoreListSurfaceShadow.resize(10);
 	
 
 

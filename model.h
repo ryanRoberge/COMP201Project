@@ -105,6 +105,7 @@ public:
 	SDL_Rect destination_road_1, destination_road_2, destination_car;
 	std::vector<SDL_Rect> menu;
 	std::vector<SDL_Rect> scoreListRect;
+	std::vector<SDL_Rect> scoreListRectShadow;
 };
 
 #endif
