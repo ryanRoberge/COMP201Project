@@ -1,6 +1,10 @@
 #include "model.h"
 #include <cstdlib>
 #include <ctime>
+#include <vector>
+#include <iostream>
+#include <iterator>
+#include <algorithm>
 
 using namespace std;
 
@@ -41,11 +45,22 @@ Model::Model() {
 	menuMessage.push_back("Play Game");
 	menuMessage.push_back("High Score Table");
 	menuMessage.push_back("Exit Game");
+	scoreListRect.resize(10);
+	topScores.resize(10);
+	for(int i = 0; i < scoreListRect.size(); ++i){
+		SDL_Rect r;
+		menu.push_back(r);
+		scoreListRect[i].y=(i+1)*50;
+		scoreListRect[i].x=1075;
+	}
 	for(int i = 0; i < menuMessage.size(); ++i){
 		SDL_Rect r;
 		menu.push_back(r);
 		menu[i].y=(i+1)*150;
 		menu[i].x=233;
+	}
+	for(int i = 0; i < 10; ++i){
+		topScores[i]=0;
 	}
 
 
@@ -82,7 +97,7 @@ bool Model::gameOver() {
 			if (SCORE_MULTIPLIER ==3) {
 				SCORE_MULTIPLIER -=1;
 			}
-			obstacles.pop_front();
+			//obstacles.pop_front();
 		}
 		if(game_over == true)
 			break;
@@ -105,7 +120,7 @@ void Model::reset(){
 		startTime = -1000000;
 		music = "assets/menuMusic.mp3";
 		changeMusic = true;
-		//highScore(prevScore);
+		highScore(prevScore);
 		obstacles.clear();
 	}
 }
@@ -122,6 +137,7 @@ void Model::go(Direction d)
 	return;
 }
 void Model::start(){
+	
 	if(selected==0){
 		startTime=SDL_GetTicks();
 		startLoop=true;
@@ -129,7 +145,12 @@ void Model::start(){
 		music = "assets/horn.mp3";
 		score = 0;
 		game_over2 = true;
+		for(int i = 0; i < 10; ++i){
+			topScores[i]=0;
+		}
+
 	}else if(selected==1){
+	showHighScore();
 	}else if(selected==2){
 		std::exit(1);
 	}
@@ -139,14 +160,101 @@ int Model::timeOffset(){
 	return SDL_GetTicks() - startTime;
 
 }
+std::vector<int> Model::merge_sort(std::vector<int>& vec)
+{
+    // Termination condition: List is completely sorted if it
+    // only contains a single element.
+    if(vec.size() == 1)
+    {
+        return vec;
+    }
+ 
+    // Determine the location of the middle element in the vector
+    std::vector<int>::iterator middle = vec.begin() + (vec.size() / 2);
+ 
+    std::vector<int> left(vec.begin(), middle);
+    std::vector<int> right(middle, vec.end());
+ 
+    // Perform a merge sort on the two smaller vectors
+    left = merge_sort(left);
+    right = merge_sort(right);
+ 
+    return merge(vec,left, right);
+}
+std::vector<int> Model::merge(std::vector<int> &vec,const std::vector<int>& left, const std::vector<int>& right)
+{
+    // Fill the resultant vector with sorted results from both vectors
+    std::vector<int> result;
+    unsigned left_it = 0, right_it = 0;
+ 
+    while(left_it < left.size() && right_it < right.size())
+    {
+        // If the left value is smaller than the right it goes next
+        // into the resultant vector
+        if(left[left_it] < right[right_it])
+        {
+            result.push_back(left[left_it]);
+            left_it++;
+        }
+        else
+        {
+            result.push_back(right[right_it]);
+            right_it++;
+        }
+    }
+ 
+    // Push the remaining data from both vectors onto the resultant
+    while(left_it < left.size())
+    {
+        result.push_back(left[left_it]);
+        left_it++;
+    }
+ 
+    while(right_it < right.size())
+    {
+        result.push_back(right[right_it]);
+        right_it++;
+    }
+    //show merge process.. 
+ 
+    //take a source vector and parse the result to it. then return it.  
+	vec = result;				
+	return vec;
+}
 void Model::highScore(int score){
-	string line;
+	int high = 0;
+	std::string line;
+	std::vector<int> scoreList;
 	ifstream scores ("assets/scores.data");
 	if(scores.is_open()){
 		while ( getline (scores,line) ){
-			cout << line << '\n';
+			int s = atoi(line.c_str());			
+			scoreList.push_back(s);
+
 		}
 	}
+	scoreList.push_back(score);
+	scores.close();
+	merge_sort(scoreList);
+	std::reverse(std::begin(scoreList), std::end(scoreList));
+	ofstream ofs ("assets/scores.data", std::ofstream::out);
+	for(int i=0;i<scoreList.size();++i){
+		ofs << scoreList[i] << "\n";
+	}
+}
+std::string Model::to_string(int x)
+{
+	std::ostringstream os ;
+	os << x ;
+	return os.str() ;
+}
+void Model::showHighScore(){
+	ifstream scores ("assets/scores.data");
+	std::string line;
+	for (int i=0;i<10 && scores.is_open() && getline(scores,line);++i){
+	topScores[i] = (atoi(line.c_str()));
+	}
+	scores.close();
 }
 void Model::calculate(/*Model * model*/)
 {
@@ -238,7 +346,7 @@ void Model::calculate(/*Model * model*/)
 		if (it->dest.y > 720) {
 			//just do pop_front instead of getting rid of the specific debris because the only obstacle which will be this far down at any 
 			//given time is the first element (oldest one)
-		obstacles.pop_front();
+		//obstacles.pop_front();
 		}
 	}
 	return;

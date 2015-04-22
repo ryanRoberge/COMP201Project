@@ -84,6 +84,7 @@ View::View(string title, int width, int height) {
         return;
     }
 	menu.resize(3);
+	scoreListSurface.resize(10);
 	
 
 
@@ -161,7 +162,17 @@ void View::show(Model * model) {
 				SDL_FreeSurface(menu[i]);
 			}
 		}
+		
 	
+	}
+	for(int i = 0; i < scoreListSurface.size(); i++){
+			std::string scoreText;			
+			if(model->topScores[i] != 0){scoreText=""; scoreText += to_string(i+1).c_str();  scoreText += ". ";  scoreText += to_string(model->topScores[i]).c_str();}
+			else{scoreText="";}
+			//scoreText="";
+			scoreListSurface[i] = TTF_RenderText_Solid(menuFont, scoreText.c_str(),shadowColor);
+			SDL_BlitSurface(scoreListSurface[i],NULL,screen,&(model->scoreListRect[i]));
+			SDL_FreeSurface(scoreListSurface[i]);
 	}
 	scoreCounter = TTF_RenderText_Solid( font, textScore.c_str(), textColor );
 	scoreCounterShadow = TTF_RenderText_Solid( font, textScore.c_str(), shadowColor );

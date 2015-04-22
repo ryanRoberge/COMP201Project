@@ -4,6 +4,8 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <sstream>
+#include <iostream>
 #include <iostream>
 #include <fstream>
 #ifndef _MODEL_H
@@ -38,10 +40,11 @@ public:
 	bool startLoop = false;
 	bool changeMusic = true;
 	std::vector<std::string> menuMessage;
+	std::vector<int> topScores;
 	int currentTime = 0;
 	int lastTime = 0;
 	int startTime = -1000000;
-	int selected = 1;
+	int selected = 0;
 	char* music = "assets/menuMusic.mp3";
 	int prevScore = 0;
 	/*int sourceRoad1_w = 1280;
@@ -74,8 +77,14 @@ public:
     bool gameOver();
     void reset();
     void highScore(int score);
+    void showHighScore();
+    std::vector<int> merge_sort(std::vector<int>& vec);
+    std::vector<int> merge(std::vector<int> &vec,const std::vector<int>& left, const std::vector<int>& right);
 
+    std::string to_string(int x);
     int timeOffset();
+    
+
 	//game over token
 	bool game_over;
 	bool game_over2;
@@ -95,6 +104,7 @@ public:
 	SDL_Rect source_road_1, source_road_2, scoreCounter, scoreCounterShadow, MESSAGE, MESSAGE_SHADOW;
 	SDL_Rect destination_road_1, destination_road_2, destination_car;
 	std::vector<SDL_Rect> menu;
+	std::vector<SDL_Rect> scoreListRect;
 };
 
 #endif
